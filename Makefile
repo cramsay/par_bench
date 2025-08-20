@@ -4,14 +4,9 @@ GHC_DIR = ghc
 FL_DIR = fl
 
 # Compiler options
-GHC_FLAGS = -Wall -fno-prof-count-entries -Wno-unused-matches -Wno-missing-signatures -XNamedDefaults
+GHC_FLAGS = -Wall -fno-prof-count-entries -rtsopts -Wno-unused-matches -Wno-missing-signatures
 GHC_PAR_FLAGS = -threaded
 FL_FLAGS = -s -i1 -h3 -r6:3:2:1:2:16
-
-# Runtime options
-ON_ECORES = taskset -c 4-11
-GHC_PAR_RTS = +RTS -s -N4 -RTS
-GHC_SEQ_RTS = +RTS -s -RTS
 
 # Source files
 SOURCES = $(wildcard $(SRC_DIR)/*.hs)
@@ -56,9 +51,9 @@ $(FL_DIR)/seq/%.tmpl: $(FL_DIR)/seq/%.fl
 
 # Rule for running GHC benchmarks
 $(GHC_DIR)/par/%.log: $(GHC_DIR)/par/%
-	$(ON_ECORE) $< $(GHC_PAR_RTS) 2&> $@
+	./ghc_speedups.sh    -f $< > $@
 $(GHC_DIR)/seq/%.log: $(GHC_DIR)/seq/%
-	$(ON_ECORE) $< $(GHC_SEQ_RTS) 2&> $@
+	./ghc_speedups.sh -b -f $< > $@
 
 # Make sure the build directories exist
 dirs: $(GHC_DIR)/par $(FL_DIR)/par $(GHC_DIR)/seq $(FL_DIR)/seq

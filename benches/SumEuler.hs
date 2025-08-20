@@ -1,7 +1,7 @@
 {{#ghc}}
 module Main where
 
-import Control.Parallel.Strategies
+{{^seq}}import Control.Parallel.Strategies{{/seq}}
 
 main :: IO ()
 main = print $ main'

@@ -1,7 +1,7 @@
 {{#ghc}}
 module Main where
 
-import Control.Parallel.Strategies
+{{^seq}}import Control.Parallel.Strategies{{/seq}}
 
 main :: IO ()
 main = print $ main'
@@ -46,9 +46,14 @@ bool False = 0
 
 main' =
   let seeds   = enumFromTo 1 10
-      bufSize = 16 -- parBuffer size
       m       = 1234 -- Dummy value to search for
       delay   = 22 -- Delay of `nfib` when applying the relation
       zs = transcl_nested (rlist delay) seeds
+{{^seq}}
+      bufSize = 16 -- parBuffer size
       strat = parBuffer bufSize (evalList rseq)
-  in bool $ m `elem` (concat (zs {{^seq}}`using` strat{{/seq}}))
+  in bool $ m `elem` (concat (zs `using` strat))
+{{/seq}}
+{{#seq}}
+  in bool $ m `elem` (concat zs)
+{{/seq}}

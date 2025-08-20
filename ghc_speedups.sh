@@ -41,7 +41,7 @@ getStat() {
 }
 
 # CSV header
-echo "cores, total, mut, gc, productivity"
+echo "cores,total,mut,gc,productivity"
 
 # Loop multiple times for each number of cores
 for cores in $(seq 1 $MAXCORES); do

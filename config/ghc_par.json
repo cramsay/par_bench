@@ -1,0 +1,6 @@
+{
+    "ghc": true,
+    "heron": false,
+    "big": true,
+    "seq": false
+}

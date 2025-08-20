@@ -1,0 +1,36 @@
+{{#ghc}}
+module Main where
+
+import Control.Parallel
+
+main :: IO ()
+main = print $ main'
+main' :: Int
+{{/ghc}}
+
+{{#heron}}
+main = main'
+{{/heron}}
+
+pfc x y c =
+  let m = (x+y) `div` 2
+      f1 = pfc x m c
+      f2 = pfc (m+1) y c
+  in if (y-x) > c
+       then f1 `par` (f2 `seq` f1+f2)
+       else if x == y
+              then x
+              else pf x m + pf (m+1) y
+
+pf x y =
+  let m = (x+y) `div` 2
+  in if y > x
+       then pf x m + pf (m+1) y
+       else x
+
+parfact x c = pfc 1 x c
+
+main' =
+  let n = 100000
+  in {{^seq}}parfact n 10000{{/seq}}
+     {{#seq}}pf 1 n{{/seq}}

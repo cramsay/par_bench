@@ -12,25 +12,33 @@ main' :: Int
 main = main'
 {{/heron}}
 
-pfc x y c =
-  let m = (x+y) `div` 2
-      f1 = pfc x m c
-      f2 = pfc (m+1) y c
-  in if (y-x) > c
-       then f1 `par` (f2 `seq` f1+f2)
-       else if x == y
-              then x
-              else pf x m + pf (m+1) y
+-- This one is a bit iffy. We actually compute the `sum [1..n]`, not `n!`, just
+-- to keep the result managable with fixed width integers. Even then, this is
+-- probably too large to fit in Heron's primitive integers...
 
-pf x y =
-  let m = (x+y) `div` 2
-  in if y > x
-       then pf x m + pf (m+1) y
-       else x
+-- concise version:
+-- parfact_seq m n = product [m..n]
+fact m n = fact' 1 m n
+fact' acc m n =
+  if (m>n)
+    then acc
+    else let acc' = acc + m -- acc * m
+         in acc' `seq` fact' acc' (m + 1) n
+         -- TODO Maybe we want the strictness in GHC only. Heron's PRS should do
+         -- the trick faster
 
-parfact x c = pfc 1 x c
+-- parallel worker function, with thresholding
+parfact m n t =
+  if (n-m) <= t
+    -- seq version if interval size <= t
+    then fact m n -- seq version if interval size <= t
+    -- par version with d&c
+    else let mid = (m+n) `div` 2
+             left = parfact m mid t
+             right = parfact (mid+1) n t
+         in left `par` right `seq` left + right -- left * right
 
 main' =
-  let n = 100000
-  in {{^seq}}parfact n 10000{{/seq}}
-     {{#seq}}pf 1 n{{/seq}}
+  let n = 50000000
+  in {{^seq}}parfact 1 n 100000{{/seq}}
+     {{#seq}}fact 1 n{{/seq}}

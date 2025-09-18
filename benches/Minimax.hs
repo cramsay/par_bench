@@ -66,7 +66,7 @@ transposeSplit (hd:tl) = (hd,tl)
 
 -- TODO make seq version
 main' =
-  let depth = 5
+  let depth = 4
   in intEval . snd . head $ solve depth testBoard
 
 {{#big}}

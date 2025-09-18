@@ -30,12 +30,13 @@ fib n =
     then 1
     else fib (n-2) + fib (n-1)
 
-threshold = 27
+threshold = 10
 main' =
-  let n = 34
+  let n = 25
+  -- Heron is limited by primitive int wordlength...
   in {{^seq}}
-     pfib n
+     pfib n `seq` pfib n `seq` pfib n `seq` pfib n `seq` pfib n `seq` pfib n
      {{/seq}}
      {{#seq}}
-     fib n
+      fib n `seq`  fib n `seq`  fib n `seq`  fib n `seq`  fib n `seq`  fib n
      {{/seq}}

@@ -26,7 +26,7 @@ tails ys =
     [] -> []
     (x : xs) -> ys : tails xs
 
-segments xs = map tails (inits xs)
+segments xs = map inits (tails xs)
 
 maxSum xs =
   let segSums = map sum xs
@@ -38,6 +38,6 @@ mss xs =
   in maximum sums
 
 main' =
-  let n = 1000
+  let n = 300
       xs = enumFromTo (0-n) n -- `using` evalList rseq
   in mss xs

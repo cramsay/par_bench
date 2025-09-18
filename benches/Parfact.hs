@@ -2,10 +2,27 @@
 module Main where
 
 import Control.Parallel
+import Prelude hiding (div, divMod)
 
 main :: IO ()
 main = print $ main'
 main' :: Int
+
+div :: Int -> Int -> Int
+div x y = case divMod x y of (d, m) -> d
+
+divMod :: Int -> Int -> (Int,Int)
+divMod x y = let  y2 = y + y in
+             if y2 <= x
+               then case divMod x y2 of
+                      (d2, m2) ->
+                        let d2x2 = d2 + d2
+                        in if y <= m2
+                             then (d2x2 + 1, m2 - y)
+                             else (d2x2, m2)
+               else if y <= x
+                      then (1, x - y)
+                      else (0, x    )
 {{/ghc}}
 
 {{#heron}}
@@ -39,6 +56,6 @@ parfact m n t =
          in left `par` right `seq` left + right -- left * right
 
 main' =
-  let n = 50000000
-  in {{^seq}}parfact 1 n 100000{{/seq}}
+  let n = 16000
+  in {{^seq}}parfact 1 n 1000{{/seq}}
      {{#seq}}fact 1 n{{/seq}}

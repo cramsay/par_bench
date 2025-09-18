@@ -16,12 +16,16 @@ GHC_BINS_PAR = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/par/%  , $(SOURCES))
 GHC_BINS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/seq/%  , $(SOURCES))
 FL_TMPLS_PAR = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/par/%.tmpl, $(SOURCES))
 FL_TMPLS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/seq/%.tmpl, $(SOURCES))
+FL_BINS_PAR = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/par/%.bin, $(SOURCES))
+FL_BINS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/seq/%.bin, $(SOURCES))
 
 # Runtime profile logs
 GHC_LOGS_PAR = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/par/%.log  , $(SOURCES))
 GHC_LOGS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/seq/%.log  , $(SOURCES))
 
 all: dirs $(GHC_BINS_PAR) $(GHC_BINS_SEQ) $(FL_TMPLS_PAR) $(FL_TMPLS_SEQ)
+
+fl_bins: dirs $(FL_BINS_PAR) $(FL_BINS_SEQ)
 
 ghc_logs: dirs $(GHC_LOGS_PAR) $(GHC_LOGS_SEQ)
 
@@ -48,6 +52,12 @@ $(FL_DIR)/par/%.tmpl: $(FL_DIR)/par/%.fl
 	flite $(FL_FLAGS) $< > $@
 $(FL_DIR)/seq/%.tmpl: $(FL_DIR)/seq/%.fl
 	flite $(FL_FLAGS) $< > $@
+
+# Rule for compiling F-lite binary templates
+$(FL_DIR)/par/%.bin: $(FL_DIR)/par/%.fl
+	heron -d $< > $@
+$(FL_DIR)/seq/%.bin: $(FL_DIR)/seq/%.fl
+	heron -d $< > $@
 
 # Rule for running GHC benchmarks
 $(GHC_DIR)/par/%.log: $(GHC_DIR)/par/%

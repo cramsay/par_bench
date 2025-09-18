@@ -47,5 +47,5 @@ pargen threshold nq n b =
         in concat bs
 
 main' =
-  {{^seq}}nqueensPar 2 12{{/seq}}
-  {{#seq}}nqueens      12{{/seq}}
+  {{^seq}}nqueensPar 2 11{{/seq}}
+  {{#seq}}nqueens      11{{/seq}}

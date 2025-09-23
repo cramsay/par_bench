@@ -8,7 +8,7 @@ trap 'rm "$STATFILE"' EXIT
 OPTS="+RTS -t$STATFILE --machine-readable -RTS"
 WRAPPER=""
 MAXCORES=6
-ITERS=3
+ITERS=19
 
 # Custom i7-1250U host: we want to pin the process to the E-cores only
 if (lscpu | grep "Model name:" | grep -cq "i7-1250U"); then

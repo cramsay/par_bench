@@ -8,7 +8,7 @@ main :: IO ()
 main = print $ main'
 
 liftEval2 :: (a -> b -> c) -> Eval a -> Eval b -> Eval c
-liftEval2 = liftA2
+liftEval2 f x y = f <$> x <*> y 
 
 lenA :: AList a -> Int
 lenAPar :: Int -> AList a -> Int
@@ -85,14 +85,14 @@ payPar depth val coins0 acc =
                                                  else (c,q-1) : coins
                           in runEval $ liftEval2 append (rpar left) (rseq right)
 
-parDepth = 1
+parDepth = 2
 parLenDepth = 3
 
 main' =
   let coins = zip vals quants
       {{#big}}
-      arg = 3841
-      vals = [250, 100, 25, 10, 5, 1]
+      arg = 1841
+      vals = [100, 50,  25, 10, 5, 1]
       -- quants = [100, 100, 100, 44, 28, 20]
       quants = [10, 10, 15, 15, 15, 15]
       {{/big}}

@@ -10,8 +10,8 @@ main = print $ main'
 liftEval2 :: (a -> b -> c) -> Eval a -> Eval b -> Eval c
 liftEval2 f x y = f <$> x <*> y 
 
-lenA :: AList a -> Int
-lenAPar :: Int -> AList a -> Int
+lenA :: AList [Int] -> Int
+lenAPar :: Int -> AList [Int] -> Int
 nilA :: AList a -> Bool
 append :: AList a -> AList a -> AList a
 pay :: Int -> [(Int,Int)] -> [Int] -> AList [Int]
@@ -31,11 +31,11 @@ main = main'
 data AList a = ANil | ASing a | Append (AList a) (AList a)
 
 lenA ANil          = 0
-lenA (ASing a)     = 1
+lenA (ASing a)     = length a `seq` 1
 lenA (Append l r)  = lenA l + lenA r
 
 lenAPar depth ANil = 0
-lenAPar depth (ASing a) = 1
+lenAPar depth (ASing a) = length a `seq` 1
 lenAPar depth (Append l r)  =
   if depth == 0
     then lenA l + lenA r
@@ -91,10 +91,9 @@ parLenDepth = 3
 main' =
   let coins = zip vals quants
       {{#big}}
-      arg = 1841
-      vals = [100, 50,  25, 10, 5, 1]
-      -- quants = [100, 100, 100, 44, 28, 20]
-      quants = [10, 10, 15, 15, 15, 15]
+      arg = 3841
+      vals = [250, 100, 25, 10, 5, 1]
+      quants = [9, 10, 15, 15, 15, 15]
       {{/big}}
       {{^big}}
       arg = 413

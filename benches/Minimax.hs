@@ -79,9 +79,9 @@ testBoard =
 {{/big}}
 {{^big}}
 testBoard =
-  [[Empty,Empty,Empty]
-  ,[Empty,Empty,Empty]
-  ,[Empty,Empty,Empty]
+  [[  X  ,Empty,  O  ]
+  ,[Empty,Empty,  X  ]
+  ,[Empty,Empty,  O  ]
   ]
 {{/big}}
 

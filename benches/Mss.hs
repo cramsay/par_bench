@@ -38,6 +38,8 @@ mss xs =
   in maximum sums
 
 main' =
-  let n = 300
+  let 
+      {{^big}}n = 20{{/big}}
+      {{#big}}n = 300{{/big}}
       xs = enumFromTo (0-n) n -- `using` evalList rseq
   in mss xs

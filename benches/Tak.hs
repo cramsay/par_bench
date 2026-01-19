@@ -37,9 +37,9 @@ threshold = 8
 main' =
   let
     {{^big}}
-    x = 19
-    y = 16
-    z = 7
+    x = 16
+    y = 14
+    z = 6
     {{/big}}
     {{#big}}
     x = 22

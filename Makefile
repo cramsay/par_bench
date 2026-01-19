@@ -14,6 +14,8 @@ SOURCES = $(wildcard $(SRC_DIR)/*.hs)
 # Compiled files
 GHC_BINS_PAR = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/par/%  , $(SOURCES))
 GHC_BINS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/seq/%  , $(SOURCES))
+FL_SRCS_PAR = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/par/%.fl, $(SOURCES))
+FL_SRCS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/seq/%.fl, $(SOURCES))
 FL_TMPLS_PAR = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/par/%.tmpl, $(SOURCES))
 FL_TMPLS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/seq/%.tmpl, $(SOURCES))
 FL_BINS_PAR = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/par/%.bin, $(SOURCES))
@@ -23,7 +25,7 @@ FL_BINS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(FL_DIR)/seq/%.bin, $(SOURCES))
 GHC_LOGS_PAR = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/par/%.log  , $(SOURCES))
 GHC_LOGS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/seq/%.log  , $(SOURCES))
 
-all: dirs $(GHC_BINS_PAR) $(GHC_BINS_SEQ) $(FL_TMPLS_PAR) $(FL_TMPLS_SEQ)
+all: dirs $(GHC_BINS_PAR) $(GHC_BINS_SEQ) $(FL_TMPLS_PAR) $(FL_TMPLS_SEQ) $(FL_BINS_PAR) $(FL_BINS_SEQ) $(FL_SRCS_PAR) $(FL_SRCS_SEQ)
 
 fl_bins: dirs $(FL_BINS_PAR) $(FL_BINS_SEQ)
 

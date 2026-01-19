@@ -32,7 +32,8 @@ fib n =
 
 threshold = 10
 main' =
-  let n = 25
+  let {{^big}}n = 18{{/big}}
+      {{#big}}n = 25{{/big}}
   -- Heron is limited by primitive int wordlength...
   in {{^seq}}
      pfib n `seq` pfib n `seq` pfib n `seq` pfib n `seq` pfib n `seq` pfib n

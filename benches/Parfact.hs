@@ -56,6 +56,7 @@ parfact m n t =
          in left `par` right `seq` left + right -- left * right
 
 main' =
-  let n = 16000
+  {{^big}}let n = 1000{{/big}}
+  {{#big}}let n = 16000{{/big}}
   in {{^seq}}parfact 1 n 1000{{/seq}}
      {{#seq}}fact 1 n{{/seq}}

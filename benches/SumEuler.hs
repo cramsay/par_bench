@@ -37,5 +37,7 @@ rem x y = if y > x
             else rem (x-y) y
 
 main' =
-  let ts = totients 0 1500 {{^seq}}`using` parList rseq{{/seq}}
+  let {{^big}}n = 70{{/big}}
+      {{#big}}n = 1500{{/big}}
+      ts = totients 0 n {{^seq}}`using` parList rseq{{/seq}}
   in maximum ts -- should be sum, but we have limited Ints

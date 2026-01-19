@@ -98,7 +98,7 @@ main' =
       {{^big}}
       arg = 413
       vals = [250, 100, 25, 10, 5, 1]
-      quants = [25, 44, 44, 44, 28, 20]
+      quants = [5,5,5,5,5,5]
       {{/big}}
   in {{^seq}}
      lenAPar parLenDepth $ payPar parDepth arg coins []

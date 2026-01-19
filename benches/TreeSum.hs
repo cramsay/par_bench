@@ -35,6 +35,8 @@ treesum Leaf = 0
 treesum (Node n l r) = treesum l + n + treesum r
 
 main' =
-  let x = mktree 42 23
+  let {{^big}}n = 15{{/big}}
+      {{#big}}n = 23{{/big}}
+      x = mktree 42 n
   in {{^seq}}ptreesum 5 x{{/seq}}
      {{#seq}}treesum    x{{/seq}}

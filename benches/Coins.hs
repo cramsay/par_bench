@@ -85,7 +85,7 @@ payPar depth val coins0 acc =
                                                  else (c,q-1) : coins
                           in runEval $ liftEval2 append (rpar left) (rseq right)
 
-parDepth = 2
+parDepth = 3
 parLenDepth = 3
 
 main' =

@@ -16,15 +16,9 @@ totients :: Int -> Int -> [Int]
 main = main'
 {{/heron}}
 
-totients lower upper = map euler $ enumToFrom upper lower
+totients lower upper = map euler [upper,upper-1..lower]
 
--- Generating the list in reverse will schedule the biggest task first
-enumToFrom u l
-  = if u <= l
-      then []
-      else u : enumToFrom (pred u) l
-
-euler n = length (filter (relprime n) (enumFromTo 1 n))
+euler n = length (filter (relprime n) [1..n])
 
 relprime x y = hcf x y == 1
 

@@ -38,5 +38,5 @@ main' =
   let {{^big}}n = 15{{/big}}
       {{#big}}n = 23{{/big}}
       x = mktree 42 n
-  in {{^seq}}ptreesum 5 x{{/seq}}
+  in {{^seq}}ptreesum 7 x{{/seq}}
      {{#seq}}treesum    x{{/seq}}

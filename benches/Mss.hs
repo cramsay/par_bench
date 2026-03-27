@@ -41,5 +41,4 @@ main' =
   let 
       {{^big}}n = 20{{/big}}
       {{#big}}n = 300{{/big}}
-      xs = enumFromTo (0-n) n -- `using` evalList rseq
-  in mss xs
+  in mss [(0-n) .. n]

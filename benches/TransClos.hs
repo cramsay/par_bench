@@ -33,8 +33,8 @@ build_nested r zss j (xs:xss) =
 
 -- Example relations
 -- r1 b n = if b>=n then [n+1] else []
--- r2 b n = if b>=n then filter (even) (reverse $ enumFromTo 1 (n-1)) else []
-rlist d n = nfib ((d-1) `min` (n `max` d)) `seq` enumFromTo (n+1) (n+11)
+-- r2 b n = if b>=n then filter (even) (reverse [1 .. (n-1)]) else []
+rlist d n = nfib ((d-1) `min` (n `max` d)) `seq` [(n+1) .. (n+11)]
 
 nfib n =
   if n <= 1
@@ -45,12 +45,18 @@ bool True = 1
 bool False = 0
 
 main' =
-  let seeds   = enumFromTo 1 10
-      m       = 1234 -- Dummy value to search for
-      delay   = 22 -- Delay of `nfib` when applying the relation
+  let seeds   = [1 .. 10]
+      {{#big}}
+      m       = 1534 -- Dummy value to search for
+      delay   = 19 -- Delay of `nfib` when applying the relation
+      {{/big}}
+      {{^big}}
+      m       = 27 -- Dummy value to search for
+      delay   = 12 -- Delay of `nfib` when applying the relation
+      {{/big}}
       zs = transcl_nested (rlist delay) seeds
 {{^seq}}
-      bufSize = 16 -- parBuffer size
+      bufSize = 50 -- parBuffer size
       strat = parBuffer bufSize (evalList rseq)
   in bool $ m `elem` (concat (zs `using` strat))
 {{/seq}}

@@ -49,8 +49,6 @@ main' :: Int
 {{#heron}}
 main = main'
 
-enumFrom m = m : enumFrom (succ m)
-
 reverse = reverseOnto []
 reverseOnto acc [] = acc
 reverseOnto acc (x:xs) = reverseOnto (x:acc) xs
@@ -179,8 +177,8 @@ isEmpty X     = False
 isEmpty O     = False
 
 placePiece new board pos
-  = zipWith (placePieceRow new pos) (enumFrom 1) board
-placePieceRow new pos y row = zipWith (placePieceCol new pos y) (enumFrom 1) row
+  = zipWith (placePieceRow new pos) [1..] board
+placePieceRow new pos y row = zipWith (placePieceCol new pos y) [1..] row
 placePieceCol new (px,py) y x old =
   if ((px == x) && (py == y))
     then new
@@ -203,8 +201,8 @@ goRow p rowsL psL (p':psR) rowsR = case p' of
   X     -> goRow p rowsL (psL . (cons X)) psR rowsR
   O     -> goRow p rowsL (psL . (cons O)) psR rowsR
 
-empties board = zipWith emptiesRow (enumFrom 1) board
-emptiesRow y row = concat (zipWith (emptiesCell y) (enumFrom 1) row)
+empties board = zipWith emptiesRow [1..] board
+emptiesRow y row = concat (zipWith (emptiesCell y) [1..] row)
 emptiesCell y x Empty = [(x,y)]
 emptiesCell y x X = []
 emptiesCell y x O = []
@@ -252,8 +250,8 @@ scoreString n (Empty:ps) = scoreString n ps
 score board =
   let r = map (eval . scoreString 0) board
       c = map (eval . scoreString 0) (transpose board)
-      d1 = eval (scoreString 0 (zipWith (!!) board (enumFrom 0)))
-      d2 = eval (scoreString 0 (zipWith (!!) board (reverse $ enumFromTo 0 (boardDim-1))))
+      d1 = eval (scoreString 0 (zipWith (!!) board [0..]))
+      d2 = eval (scoreString 0 (zipWith (!!) board (reverse [0 .. (boardDim-1)])))
   in r ++ c ++ [d1,d2]
 
 --------------------------------------------------------------------------------

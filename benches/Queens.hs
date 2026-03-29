@@ -49,5 +49,5 @@ pargen threshold nq n b =
 main' =
   let {{^big}}n = 7{{/big}}
       {{#big}}n = 11{{/big}}
-  in {{^seq}}nqueensPar 2 n{{/seq}}
+  in {{^seq}}nqueensPar 3 n{{/seq}}
      {{#seq}}nqueens      n{{/seq}}

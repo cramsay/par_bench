@@ -33,5 +33,5 @@ rem x y = if y > x
 main' =
   let {{^big}}n = 70{{/big}}
       {{#big}}n = 1500{{/big}}
-      ts = totients 0 n {{^seq}}`using` parList rseq{{/seq}}
+      ts = totients 0 n {{^seq}}`using` parBuffer 100 rseq{{/seq}}
   in maximum ts -- should be sum, but we have limited Ints

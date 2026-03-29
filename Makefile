@@ -7,6 +7,8 @@ FL_DIR = fl
 GHC_FLAGS = -Wall -fno-prof-count-entries -rtsopts -Wno-unused-matches -Wno-missing-signatures
 GHC_PAR_FLAGS = -threaded
 FL_FLAGS = -s -i1 -h3 -r6:3:2:1:2:16
+FL = flite
+HERON = heron
 
 # Source files
 SOURCES = $(wildcard $(SRC_DIR)/*.hs)
@@ -28,6 +30,8 @@ GHC_LOGS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/seq/%.log  , $(SOURCES))
 all: dirs $(GHC_BINS_PAR) $(GHC_BINS_SEQ) $(FL_TMPLS_PAR) $(FL_TMPLS_SEQ) $(FL_BINS_PAR) $(FL_BINS_SEQ) $(FL_SRCS_PAR) $(FL_SRCS_SEQ)
 
 fl_bins: dirs $(FL_BINS_PAR) $(FL_BINS_SEQ)
+fl_tmpls: dirs $(FL_TMPLS_PAR) $(FL_TMPLS_SEQ)
+fl_srcs: dirs $(FL_SRCS_PAR) $(FL_SRCS_SEQ)
 
 ghc_logs: dirs $(GHC_LOGS_PAR) $(GHC_LOGS_SEQ)
 
@@ -51,15 +55,15 @@ $(GHC_DIR)/seq/%: $(GHC_DIR)/seq/%.hs
 
 # Rule for compiling F-lite templates
 $(FL_DIR)/par/%.tmpl: $(FL_DIR)/par/%.fl
-	flite $(FL_FLAGS) $< > $@
+	$(FL) $(FL_FLAGS) $< > $@
 $(FL_DIR)/seq/%.tmpl: $(FL_DIR)/seq/%.fl
-	flite $(FL_FLAGS) $< > $@
+	$(FL) $(FL_FLAGS) $< > $@
 
 # Rule for compiling F-lite binary templates
 $(FL_DIR)/par/%.bin: $(FL_DIR)/par/%.fl
-	heron -d $< > $@
+	$(HERON) -d $< > $@
 $(FL_DIR)/seq/%.bin: $(FL_DIR)/seq/%.fl
-	heron -d $< > $@
+	$(HERON) -d $< > $@
 
 # Rule for running GHC benchmarks
 $(GHC_DIR)/par/%.log: $(GHC_DIR)/par/%

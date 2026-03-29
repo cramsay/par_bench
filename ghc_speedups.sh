@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# A wrapper script to run a GHC benchmark on various numbers of cores.
+# Uses GHC stats to log timing and productivity.
+# I use these results to find a median runtime for each core configuration.
+
 # Create a temp file for stats output
 STATFILE=$(mktemp -t ghcsweep.XXXXX)
 trap 'rm "$STATFILE"' EXIT

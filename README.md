@@ -32,15 +32,4 @@ Similarly, you can generate the GHC binaries for a benchmark by omitting the
 
 ## Profiling
 
-To gather run-time results, run `make ghc_logs`. This will run each benchmark a
-few times using various #CPUs (default is a sweep from 1->8 cores). If you want
-to adjust the runtime options for GHC, see `ghc_speedups.sh` and add a new
-conditional based on the CPU model name. You might want to configure the nursery
-size (`-A`), or even pin the processes to a subset of the available cores (we
-only use E-cores on my xps 13).
-
-## Analysis
-
-If you're using nix, you can also run the `Analysis.ipynb` notebook with
-`jupyter lab` to generate graphs of speedups, etc. If not, install jupyter and
-make sure the numpy and pandas python libraries are available.
+To gather run-time results for either GHC or Siege, see the `AnalysisGHC.ipynb` and `AnalysisSiege.ipynb` notebooks. Launch the Jupyter lab environment for this with the `jupyter lab` command.

@@ -29,6 +29,7 @@ GHC_LOGS_SEQ = $(patsubst $(SRC_DIR)/%.hs, $(GHC_DIR)/seq/%.log  , $(SOURCES))
 
 all: dirs $(GHC_BINS_PAR) $(GHC_BINS_SEQ) $(FL_TMPLS_PAR) $(FL_TMPLS_SEQ) $(FL_BINS_PAR) $(FL_BINS_SEQ) $(FL_SRCS_PAR) $(FL_SRCS_SEQ)
 
+ghc_bins: dirs $(GHC_BINS_PAR) $(GHC_BINS_SEQ)
 fl_bins: dirs $(FL_BINS_PAR) $(FL_BINS_SEQ)
 fl_tmpls: dirs $(FL_TMPLS_PAR) $(FL_TMPLS_SEQ)
 fl_srcs: dirs $(FL_SRCS_PAR) $(FL_SRCS_SEQ)
